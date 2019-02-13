@@ -1,0 +1,11 @@
+install.bat
+uninstall.bat
+.gitignore
+.vs
+.git
+package-lock.json
+yarn.lock
+node_modules
+.dockerignore
+Dockerfile
+README.md
