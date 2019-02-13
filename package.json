@@ -1,0 +1,23 @@
+{
+    "name": "criminals_search",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "install-service": "node services.js install",
+        "uninstall-service": "node services.js uninstall"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "1.18.2",
+        "cheerio": "1.0.0-rc.2",
+        "cors": "2.8.4",
+        "express": "4.16.2",
+        "morgan": "1.9.0",
+        "mssql": "^4.3.0",
+        "node-windows": "^0.1.14",
+        "request": "2.83.0",
+        "xml2js": "^0.4.19"
+    }
+}
