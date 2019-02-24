@@ -84,39 +84,23 @@ function get_data(name) {
  * @param {*} url
  */
 async function get_data_details(url) {
-  options["url"] = url;
+  const options = {
+    url: url,
+    method: 'GET'
+  };
   return new Promise(async (resolve, reject) => {
-    let body = await do_request_details(options);
-    if (body) {
-      let $ = cheerio.load(body);
-      resolve({
-        fullname: `${$("#ctl00_MainContent_lblFirstName")
-          .text()
-          .trim()} 
-				${$("#ctl00_MainContent_lblLastName")
-          .text()
-          .trim()}`,
-        photo: "",
-        alias: $("#ctl00_MainContent_pnlAliases table tr")
-          .eq(1)
-          .find("td")
-          .eq(2)
-          .text(),
-        description: "N/A",
-        rewards: "",
-        date_of_birth: $("#ctl00_MainContent_lblDOB")
-          .text()
-          .trim(),
-        place_of_birth: $("#ctl00_MainContent_lblPOB").text(),
-        sex: "N/A",
-        occupation: "N/A",
-        nationality: $("#ctl00_MainContent_pnlIdentification table tr")
-          .eq(1)
-          .find("td")
-          .eq(2)
-          .text()
-      });
-    }
+    request(options, (err, res, body) => {
+      if (!err) {
+        if (body) {
+          let $ = cheerio.load(body);
+          resolve({
+            fullname: $('.w-blog-post-title').text().trim(),
+            photo: $('.attachment-large').attr('src'),
+            description: $('.l-section-h p').first().text().trim()
+          });
+        }
+      }
+    })
   });
 }
 

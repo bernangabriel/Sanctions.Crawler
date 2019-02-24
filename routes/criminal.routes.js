@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const ctrl = require("../controllers");
 
-router.get('/download',async(req, res)=>{
-    const _result=await ctrl.download.save_all();
+router.get('/download', async (req, res) => {
+    const _result = await ctrl.download.save_all();
     res.json(_result);
 });
 
-router.post("/", async(req, res) => {
+router.post("/", async (req, res) => {
     var firstName = (req.body.first_name || "").toLowerCase();
     var lastName = (req.body.last_name || "").toLowerCase();
 
@@ -22,8 +22,8 @@ router.post("/", async(req, res) => {
         interpool: [],
         ofac: [],
         onu: [],
-        united_nation:[],
-		pn:[]
+        united_nation: [],
+        pn: []
     };
 
     if (firstName.length > 3 || lastName.length > 3) {
@@ -38,7 +38,10 @@ router.post("/", async(req, res) => {
         if (search_in_interpool == true || search_in_interpool == "True") {
             obj_result.interpool = await ctrl
                 .interpool
-                .get_data({forename: firstName, name: lastName});
+                .get_data({
+                    forename: firstName,
+                    name: lastName
+                });
         }
 
         //ofac
@@ -56,7 +59,7 @@ router.post("/", async(req, res) => {
         }
 
         //united-nation
-         if (search_in_united_nation == true || search_in_united_nation === "True") {
+        if (search_in_united_nation == true || search_in_united_nation === "True") {
             obj_result.united_nation = await ctrl
                 .unitedNation
                 .get_data(`${firstName.trim()} ${lastName.trim()}`);
@@ -72,7 +75,7 @@ router.post("/", async(req, res) => {
     res.json(obj_result);
 });
 
-router.get("/details", async(req, res) => {
+router.get("/details", async (req, res) => {
     let type = req.query.type || "";
     let url = req.query.url || "";
     var _result = {};
@@ -100,6 +103,12 @@ router.get("/details", async(req, res) => {
             case "onu":
                 _result = await ctrl
                     .onu
+                    .get_data_details(url);
+                break;
+
+            case "pn":
+                _result = await ctrl
+                    .pn
                     .get_data_details(url);
                 break;
         }
