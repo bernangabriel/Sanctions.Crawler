@@ -4,6 +4,7 @@ const ofac = require('./ofac.controller');
 const onu = require('./onu.controller');
 const download=require('./download.controller');
 const unitedNation=require('./united-nation.controller');
+const pn=require('./pn.controller');
 
 module.exports = {
     interpool,
@@ -11,5 +12,6 @@ module.exports = {
     ofac,
     onu,
     download,
-    unitedNation
+    unitedNation,
+    pn
 };

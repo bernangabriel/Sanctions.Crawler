@@ -15,13 +15,15 @@ router.post("/", async(req, res) => {
     var search_in_ofac = req.body.search_in_ofac || false;
     var search_in_onu = req.body.search_in_onu || false;
     var search_in_united_nation = req.body.search_in_united_nation || false;
+    var search_in_pn = req.body.search_in_pn || false;
 
     var obj_result = {
         fbi: [],
         interpool: [],
         ofac: [],
         onu: [],
-        united_nation:[]
+        united_nation:[],
+		pn:[]
     };
 
     if (firstName.length > 3 || lastName.length > 3) {
@@ -57,6 +59,13 @@ router.post("/", async(req, res) => {
          if (search_in_united_nation == true || search_in_united_nation === "True") {
             obj_result.united_nation = await ctrl
                 .unitedNation
+                .get_data(`${firstName.trim()} ${lastName.trim()}`);
+        }
+
+        //policia nacional
+        if (search_in_pn == true || search_in_pn === "True") {
+            obj_result.pn = await ctrl
+                .pn
                 .get_data(`${firstName.trim()} ${lastName.trim()}`);
         }
     }
